@@ -11,10 +11,15 @@
 build_map () {
   awk_prog='
   {
-    map[$7] = sprintf("%s\\n\\t%s: %s (%s)", map[$7], $1, $5, $6)
+    counts[$7] += 1
+    map[$7,counts[$7]] = sprintf("%s: %s (%s)", $1, $5, $6)
   } END {
-    for (proc in map)
-      printf("%s%s\\n", proc, map[proc])
+    for (proc in counts) {
+      printf("%s\n", proc)
+      for (i=1; i<=counts[proc]; i++) {
+        printf("\\t%s\\n", map[proc,counts[proc]])
+      }
+    }
   }'
 
   # show TCP, UDP, PID/program, and do not limit host width
