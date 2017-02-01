@@ -54,7 +54,7 @@ draw_body () {
 }
 
 # clear_all sets the terminal cursor to (0, 0) and clears all characters.
-clearall () {
+clear_all () {
   tput cup 0 0
   tput ed
 }
